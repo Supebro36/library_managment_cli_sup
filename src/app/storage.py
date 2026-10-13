@@ -8,7 +8,7 @@ from src.models import Book,StorageError,InvalidBookDataError
 
 logger=logging.getLogger(__name__)
 
-class storage:
+class JsonStorage:
     """Store books according to it's relevant file."""
 
     def __init__(self,path:Path)->None:
@@ -23,7 +23,7 @@ class storage:
             text=self._path.read_text(encoding="utf-8")
             if not text.strip():
                 return[]
-            raw=json.load(text)
+            raw=json.loads(text)
         except(OSError,json.JSONDecodeError) as exc:
             logger.error("Failed to read %s: %s", self._path, exc)
             raise StorageError(

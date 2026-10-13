@@ -21,7 +21,6 @@ PERSONAL LIBRARY & READING TRACKER
 ## Code Requirement
 - Use OOPs
 - Use Json
-- Use UUID to get Unique IDs
 - Exception Handeling
 - Proper Project Structure
 - Use Proper Type Hints

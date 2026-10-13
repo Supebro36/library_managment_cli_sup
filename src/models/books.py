@@ -31,10 +31,10 @@ MIN_RATING=1
 MAX_RATING=5
 MAX_NOTES_LENGTH=1000
 
-def _validate_rating(rating:Any)->float:
+def _validate_rating(rating:Any)->int:
     """Ensure the rating """
-    if isinstance(rating,bool) or not isinstance(rating,float):
-        raise InvalidRatingError("Rating must be not be empty")
+    if type(rating) is not int :
+        raise InvalidRatingError("Rating must be a whole number")
     if not MIN_RATING <= rating<=MAX_RATING:
         raise InvalidRatingError(
             f"Rating must be between {MIN_RATING}and{MAX_RATING}"
@@ -45,8 +45,13 @@ def _validate_rating(rating:Any)->float:
 def _clean_notes(notes:Any)->str:
     """Return Stripped note text. Blank also allowed."""
     if not isinstance(notes,str):
-        return ""
-    return notes.strip()[:MAX_NOTES_LENGTH]
+        raise InvalidBookDataError("Notes must be text.")
+    notes=notes.strip()
+    if len(notes)>MAX_NOTES_LENGTH:
+        raise InvalidBookDataError(
+            f"Notes cannot exceed {MAX_NOTES_LENGTH} characters."
+        )
+    return notes
 
 
 def _clean_text(value:Any , field:str)->str:
@@ -72,30 +77,31 @@ class Book:
             total_page:int,
             status: Status=Status.TO_READ,
             current_page:int=0,
-            finished_date:Optional[date]=None,
-            rating:Optional[float]=None,
+            finish_date:Optional[date]=None,
+            rating:Optional[int]=None,
             notes:str="",
     )->None:
         """Create a Valid Book"""
-        if total_page<=0:
-            raise InvalidBookDataError (f"Invalid data of Book")
-
+        if type(total_page) is not int or total_page<=0:
+                raise InvalidBookDataError(
+                    "Total pages must be a whole number greater than 0."
+            )
         self.id=book_id
         self.title=_clean_text(title, "Title")
         self.author=_clean_text(author, "Author")
-        self.genre=_clean_text(genre, "Genre")
+        self.genre=_clean_text(genre, "Genre").title()
         self.total_page=total_page
         self._status=status
         self._current_page=0
-        self._finished_date=Optional[date]=None
+        self._finish_date:Optional[date]=None
 
         if status is Status.READING:
             self._current_page=self._validate_page(current_page)
         elif status is Status.FINISHED:
             self._current_page= total_page
-            self._finished_date=finished_date or date.today()
+            self._finish_date=finish_date or date.today()
 
-        self._rating:Optional[float]=None
+        self._rating:Optional[int]=None
         if rating is not None:
             if status is not Status.FINISHED:
                 raise InvalidBookDataError(
@@ -117,12 +123,12 @@ class Book:
         return self._current_page
 
     @property
-    def finished_date(self)-> Optional[date]:
+    def finish_date(self)-> Optional[date]:
         """Date the book was finished , or None ."""
-        return self._finished_date
+        return self._finish_date
 
     @property
-    def rating(self)->Optional[float]:
+    def rating(self)->Optional[int]:
         """Star rating from 1-5 , or None if not rated ."""
         return self._rating
 
@@ -131,7 +137,7 @@ class Book:
         """Free-text notes or review ."""
         return self._notes
     @property
-    def progerss_percent(self)->int:
+    def progress_percent(self)->int:
         """Reading progress as a whole-number percentage."""
         return int(self._current_page*100/self.total_page)
 
@@ -147,7 +153,7 @@ class Book:
     def start_reading(self)->None:
         """Move a To-read book into the reading status."""
         if self._status is Status.FINISHED:
-            raise InvalidOperationError(f"'{self.title}' is all ready finished .")
+            raise InvalidOperationError(f"'{self.title}' is already finished .")
         self._status=Status.READING
 
     def update_progress(self,page:int)->None:
@@ -164,12 +170,12 @@ class Book:
             raise InvalidOperationError(f"'{self.title}' is already finished.")
         self._status=Status.FINISHED
         self._current_page=self.total_page
-        self._finished_date= finished_on or date.today()
+        self._finish_date= finished_on or date.today()
 
     def set_rating(self,rating:int)->None:
         """Rate a finished book from 1-5 stars."""
         if self._status is not Status.FINISHED:
-            raise InvalidRatingError(
+            raise InvalidOperationError(
                 f"'{self.title}' must be finished before it can be rated."
             )
         self._rating= _validate_rating(rating)
@@ -186,7 +192,7 @@ class Book:
             "title": self.title,
             "author": self.author,
             "genre": self.genre,
-            "total_pages": self.total_pages,
+            "total_page": self.total_page,
             "status": self._status.value,
             "current_page": self._current_page,
             "finish_date": (
@@ -206,7 +212,7 @@ class Book:
                 title=data["title"],
                 author=data["author"],
                 genre=data["genre"],
-                total_pages=data["total_pages"],
+                total_page=data["total_page"],
                 status=Status.parse(data["status"]),
                 current_page=data.get("current_page", 0),
                 finish_date=(

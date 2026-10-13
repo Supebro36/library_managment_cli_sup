@@ -1,7 +1,10 @@
+from __future__ import annotations
+
 import logging
 
 from src.models import BookNotFoundError,Book,Status
 
+from src.app.storage import JsonStorage
 from typing import Optional
 from datetime import date
 
@@ -27,7 +30,7 @@ class Statistics:
 class Library:
     """A Collection of books that saves itself after every change."""
 
-    def __init__(self,storage):
+    def __init__(self,storage:JsonStorage):
         """Create a library and load existing books from storage."""
         self._storage= storage
         self._books:list[Book]=storage.load()
@@ -40,7 +43,7 @@ class Library:
         """Return an id higher than any existing id."""
         return max((book.id for book in self._books),default=0)+1
 
-    def _save(self)->int:
+    def _save(self)->None:
         """Write the current state to storage ."""
         self._storage.save(self._books)
 
@@ -49,14 +52,14 @@ class Library:
         title:str,
         author:str,
         genre:str,
-        total_pages:int,
+        total_page:int,
         status:Status=Status.TO_READ,
         current_page:int =0,
     )-> Book:
         """Create a book,add it to the collection and save ."""
 
         book=Book(
-            self._next_id(),title,author,genre,total_pages,status,current_page,
+            self._next_id(),title,author,genre,total_page,status,current_page,
         )
 
         self._books.append(book)
@@ -70,7 +73,7 @@ class Library:
         for book in self._books:
             if book.id==book_id:
                 return book
-        raise BookNotFoundError(f"No Book with {book_id} found.")
+        raise BookNotFoundError(f"No book with id {book_id} found.")
 
     def list_books(
             self,
@@ -100,7 +103,7 @@ class Library:
         book=self.get_book(book_id)
         self._books.remove(book)
         self._save()
-        logger.info("Removed Book id=%d titel=%r",book.id,book.title)
+        logger.info("Removed book id=%d title=%r",book.id,book.title)
         return book
 
     def start_reading(self,book_id:int)-> Book:
@@ -114,26 +117,26 @@ class Library:
     def update_progress(self,book_id:int,page:int)->Book:
         """Set the current pages of a book taht is being read."""
         book=self.get_book(book_id)
-        book.update_progress()
+        book.update_progress(page)
         self._save()
-        logger.info("progress id=%d page=%d",book.id)
+        logger.info("progress id=%d page=%d",book.id,page)
         return book
 
-    def marked_finished(self,book_id:int)-> Book:
+    def mark_finished(self,book_id:int)-> Book:
         """mark a book as finsihed (record today's date)."""
         book=self.get_book(book_id)
         book.mark_finished()
         self._save()
-        logger.info("Finished book's id=%d",book.id,book.finished_date)
+        logger.info("Finished book's id=%d on %s",book.id,book.finish_date)
         return book
 
-    def rate_books(self,book_id:int,rating:float)-> Book:
-            """mark a book as finsihed (record today's date)."""
-            book=self.get_book(book_id)
-            book.set_rating(rating)
-            self._save()
-            logger.info("Rated book's id=%d rating=%d",book.id,rating)
-            return book
+    def rate_book(self,book_id:int,rating:int)-> Book:
+        """mark a book as finsihed (record today's date)."""
+        book=self.get_book(book_id)
+        book.set_rating(rating)
+        self._save()
+        logger.info("Rated book's id=%d rating=%d",book.id,rating)
+        return book
 
     def set_notes(self, book_id: int, notes: str) -> Book:
         """Replace a book's notes/review text."""
@@ -152,7 +155,7 @@ class Library:
             if b.finish_date and b.finish_date.year == this_year
         )
         average = (
-            sum(b.total_pages for b in finished) / len(finished)
+            sum(b.total_page for b in finished) / len(finished)
             if finished else 0.0
         )
 
