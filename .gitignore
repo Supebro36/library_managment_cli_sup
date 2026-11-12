@@ -1,7 +1,12 @@
+<<<<<<< HEAD
 venv/
 .venv/
 __pycache__/
 .pytest_cache/
+=======
+.venv/
+__pycache__
+>>>>>>> 2383e5a (day04: update the keywords)
 data.json
 library.log
 export/

@@ -1,6 +1,14 @@
+<<<<<<< HEAD
 """All tests for the Personal Library app.
 
 Run from the project root:  pytest
+=======
+"""All tests for the Personal Library app in one file.
+
+Run from the project root with either:
+    python main.py
+    pytest main.py
+>>>>>>> 2383e5a (day04: update the keywords)
 """
 
 import csv
@@ -24,7 +32,12 @@ from src.models import (
 # ===== shared helpers and fixtures =====================================
 def make_book(**overrides):
     """Build a valid Book, allowing field overrides."""
+<<<<<<< HEAD
     data = dict(book_id=1, title="Dune", author="Frank Herbert",genre="sci-fi", total_page=500)
+=======
+    data = dict(book_id=1, title="Dune", author="Frank Herbert",
+                genre="sci-fi", total_page=500)
+>>>>>>> 2383e5a (day04: update the keywords)
     data.update(overrides)
     return Book(**data)
 
@@ -69,7 +82,11 @@ def clean_logger():
 # ===== models: Book and Status =========================================
 def test_new_book_defaults():
     book = make_book()
+<<<<<<< HEAD
     assert (book.status, book.current_page, book.finish_date) == (Status.TO_READ, 0, None)
+=======
+    assert (book.status, book.current_page, book.finished_date) == (Status.TO_READ, 0, None)
+>>>>>>> 2383e5a (day04: update the keywords)
     assert book.genre == "Sci-Fi"
 
 
@@ -108,7 +125,11 @@ def test_update_progress_bounds():
 def test_mark_finished_records_date():
     book = make_book(status=Status.READING, current_page=10)
     book.mark_finished()
+<<<<<<< HEAD
     assert (book.status, book.current_page, book.finish_date) == (
+=======
+    assert (book.status, book.current_page, book.finished_date) == (
+>>>>>>> 2383e5a (day04: update the keywords)
         Status.FINISHED, 500, date.today())
 
 
@@ -121,7 +142,11 @@ def test_finished_book_rejects_further_changes(action):
 
 
 def test_dict_round_trip_keeps_rating_and_notes():
+<<<<<<< HEAD
     book = make_book(status=Status.FINISHED, finish_date=date(2026, 1, 5),
+=======
+    book = make_book(status=Status.FINISHED, finished_date=date(2026, 1, 5),
+>>>>>>> 2383e5a (day04: update the keywords)
                      rating=5, notes="Loved it")
     clone = Book.from_dict(book.to_dict())
     assert clone.to_dict() == book.to_dict()
@@ -240,7 +265,11 @@ def test_reading_workflow(library):
     library.update_progress(book.id, 100)
     assert book.current_page == 100
     library.mark_finished(book.id)
+<<<<<<< HEAD
     assert book.status is Status.FINISHED and book.finish_date is not None
+=======
+    assert book.status is Status.FINISHED and book.finished_date is not None
+>>>>>>> 2383e5a (day04: update the keywords)
 
 
 def test_statistics_empty(library):
@@ -395,4 +424,8 @@ def test_export_menu(monkeypatch, library, tmp_path, capsys):
 
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     sys.exit(pytest.main([__file__, "-v"]))
+=======
+    sys.exit(pytest.main([__file__, "-v"]))
+>>>>>>> 2383e5a (day04: update the keywords)

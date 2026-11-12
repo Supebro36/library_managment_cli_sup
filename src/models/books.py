@@ -77,7 +77,11 @@ class Book:
             total_page:int,
             status: Status=Status.TO_READ,
             current_page:int=0,
+<<<<<<< HEAD
             finish_date:Optional[date]=None,
+=======
+            finished_date:Optional[date]=None,
+>>>>>>> 2383e5a (day04: update the keywords)
             rating:Optional[int]=None,
             notes:str="",
     )->None:
@@ -93,7 +97,11 @@ class Book:
         self.total_page=total_page
         self._status=status
         self._current_page=0
+<<<<<<< HEAD
         self._finish_date:Optional[date]=None
+=======
+        self._finished_date:Optional[date]=None
+>>>>>>> 2383e5a (day04: update the keywords)
 
         if status is Status.READING:
             self._current_page=self._validate_page(current_page)
@@ -195,8 +203,8 @@ class Book:
             "total_page": self.total_page,
             "status": self._status.value,
             "current_page": self._current_page,
-            "finish_date": (
-                self._finish_date.isoformat() if self._finish_date else None
+            "finished_date": (
+                self._finished_date.isoformat() if self._finished_date else None
             ),
             "rating": self._rating,
             "notes": self._notes,
@@ -206,7 +214,7 @@ class Book:
     def from_dict(cls, data: dict[str, Any]) -> "Book":
         """Rebuild a Book from :meth:`to_dict` output."""
         try:
-            raw_date = data.get("finish_date")
+            raw_date = data.get("finished_date")
             return cls(
                 book_id=int(data["id"]),
                 title=data["title"],
@@ -215,7 +223,7 @@ class Book:
                 total_page=data["total_page"],
                 status=Status.parse(data["status"]),
                 current_page=data.get("current_page", 0),
-                finish_date=(
+                finished_date=(
                     date.fromisoformat(raw_date) if raw_date else None
                 ),
                 rating=data.get("rating"),

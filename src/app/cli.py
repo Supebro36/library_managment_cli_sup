@@ -64,8 +64,13 @@ def _progress_text(book: Book) -> str:
             f"{book.current_page}/{book.total_page} "
             f"({book.progress_percent}%)"
         )
+<<<<<<< HEAD
     if book.status is Status.FINISHED and book.finish_date:
         return f"done {book.finish_date.isoformat()}"
+=======
+    if book.status is Status.FINISHED and book.finished_date:
+        return f"done {book.finished_date.isoformat()}"
+>>>>>>> 2383e5a (day04: update the keywords)
     return "-"
 
 
@@ -76,17 +81,28 @@ def print_books(books: Sequence[Book]) -> None:
         return
     header = (
         f"{'ID':<4}{'Title':<26}{'Author':<18}{'Genre':<12}"
+<<<<<<< HEAD
         f"{'Status':<10}{'Rating':<8}{'Progress':<22}Notes"
+=======
+        f"{'Status':<10}{'Rating':<8}Progress"
+>>>>>>> 2383e5a (day04: update the keywords)
     )
     print(header)
     print("-" * len(header))
     for b in books:
         rating = f"{b.rating}/5" if b.rating else "-"
+<<<<<<< HEAD
         notes = (b.notes[:22] + "...") if len(b.notes) > 22 else b.notes
         print(
             f"{b.id:<4}{b.title[:24]:<26}{b.author[:16]:<18}"
             f"{b.genre[:10]:<12}{b.status.value:<10}{rating:<8}"
             f"{_progress_text(b):<22}{notes or '-'}"
+=======
+        print(
+            f"{b.id:<4}{b.title[:24]:<26}{b.author[:16]:<18}"
+            f"{b.genre[:10]:<12}{b.status.value:<10}{rating:<8}"
+            f"{_progress_text(b)}"
+>>>>>>> 2383e5a (day04: update the keywords)
         )
 
 
@@ -133,7 +149,11 @@ def start_reading(library: Library) -> None:
 def finish_book(library: Library) -> None:
     """Menu action: mark a book as finished."""
     book = library.mark_finished(prompt_int("Book id"))
+<<<<<<< HEAD
     print(f"Finished '{book.title}' on {book.finish_date}. Well done!")
+=======
+    print(f"Finished '{book.title}' on {book.finished_date}. Well done!")
+>>>>>>> 2383e5a (day04: update the keywords)
 
 
 def remove_book(library: Library) -> None:
