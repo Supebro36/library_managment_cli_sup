@@ -99,7 +99,7 @@ class Book:
             self._current_page=self._validate_page(current_page)
         elif status is Status.FINISHED:
             self._current_page= total_page
-            self._finish_date=finished_date or date.today()
+            self._finished_date=finished_date or date.today()
 
         self._rating:Optional[int]=None
         if rating is not None:
