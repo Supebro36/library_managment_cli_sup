@@ -73,11 +73,7 @@ class Library:
         for book in self._books:
             if book.id==book_id:
                 return book
-<<<<<<< HEAD
         raise BookNotFoundError(f"No book with id {book_id} found.")
-=======
-        raise BookNotFoundError(f"No Book with id {book_id} found.")
->>>>>>> 2383e5a (day04: update the keywords)
 
     def list_books(
             self,
@@ -107,11 +103,7 @@ class Library:
         book=self.get_book(book_id)
         self._books.remove(book)
         self._save()
-<<<<<<< HEAD
-        logger.info("Removed book id=%d title=%r",book.id,book.title)
-=======
         logger.info("Removed Book id=%d title=%r",book.id,book.title)
->>>>>>> 2383e5a (day04: update the keywords)
         return book
 
     def start_reading(self,book_id:int)-> Book:
@@ -135,17 +127,10 @@ class Library:
         book=self.get_book(book_id)
         book.mark_finished()
         self._save()
-<<<<<<< HEAD
-        logger.info("Finished book's id=%d on %s",book.id,book.finish_date)
-        return book
-
-    def rate_book(self,book_id:int,rating:int)-> Book:
-=======
         logger.info("Finished book's id=%d on %s",book.id,book.finished_date)
         return book
 
     def rate_books(self,book_id:int,rating:int)-> Book:
->>>>>>> 2383e5a (day04: update the keywords)
         """mark a book as finsihed (record today's date)."""
         book=self.get_book(book_id)
         book.set_rating(rating)

@@ -1,2 +1,13 @@
 2026-11-03 22:56:13,986 INFO     src.app.storage: No data file at E:\library_managment_cli_sup\data.json ; starting empty
 2026-11-12 23:47:38,938 INFO     src.app.storage: No data file at E:\library_managment_cli_sup\data.json ; starting empty
+2026-11-13 14:27:18,300 INFO     src.app.storage: No data file at E:\library_managment_cli_sup\data.json ; starting empty
+2026-11-13 14:29:08,997 INFO     src.app.library: Added book id=1 title ='harry porter'
+2026-11-13 14:30:10,026 INFO     src.app.library: Added book id=2 title ='brave new world'
+2026-11-13 14:31:23,386 WARNING  src.app.cli: Action 3 failed: 'harry porter'is not marked as 'Reading'.
+2026-11-13 14:33:11,187 INFO     src.app.library: progress id=2 page=75
+2026-11-13 14:33:48,484 INFO     src.app.storage: Loaded 2 book(s) from E:\library_managment_cli_sup\data.json
+2026-11-13 14:34:04,816 INFO     src.app.library: Removed Book id=1 title='harry porter'
+2026-11-13 14:36:31,751 INFO     src.app.storage: Loaded 1 book(s) from E:\library_managment_cli_sup\data.json
+2026-11-13 14:38:05,868 INFO     src.app.library: Updated notes id=2
+2026-11-13 14:38:28,736 INFO     src.app.exporter: Exported 1 book(s) to E:\library_managment_cli_sup\export\reading_report.csv
+2026-11-13 22:22:08,342 INFO     src.app.storage: Loaded 1 book(s) from E:\library_managment_cli_sup\data.json

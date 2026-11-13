@@ -14,24 +14,12 @@ logger = logging.getLogger(__name__)
 
 CSV_FIELDS = [
     "id", "title", "author", "genre", "status", "total_page",
-<<<<<<< HEAD
-    "current_page", "rating", "finish_date", "notes",
-=======
     "current_page", "rating", "finished_date", "notes",
->>>>>>> 2383e5a (day04: update the keywords)
 ]
 
 
 def export_csv(books: Sequence[Book], path: Path) -> None:
-<<<<<<< HEAD
-    """Write all books to a CSV file.
-
-    Raises:
-        StorageError: if the file cannot be written.
-    """
-=======
     """Write all books to a CSV file.StorageError: if the file cannot be written."""
->>>>>>> 2383e5a (day04: update the keywords)
     try:
         path.parent.mkdir(parents=True, exist_ok=True)
         with path.open("w", newline="", encoding="utf-8") as handle:
@@ -70,11 +58,7 @@ def export_markdown(books: Sequence[Book], path: Path) -> None:
     ]
     for book in books:
         rating = f"{book.rating}/5" if book.rating else "-"
-<<<<<<< HEAD
-        finished = book.finish_date.isoformat() if book.finish_date else "-"
-=======
         finished = book.finished_date.isoformat() if book.finished_date else "-"
->>>>>>> 2383e5a (day04: update the keywords)
         cells = [
             str(book.id), _md_cell(book.title), _md_cell(book.author),
             _md_cell(book.genre), book.status.value,

@@ -77,11 +77,7 @@ class Book:
             total_page:int,
             status: Status=Status.TO_READ,
             current_page:int=0,
-<<<<<<< HEAD
-            finish_date:Optional[date]=None,
-=======
             finished_date:Optional[date]=None,
->>>>>>> 2383e5a (day04: update the keywords)
             rating:Optional[int]=None,
             notes:str="",
     )->None:
@@ -97,17 +93,13 @@ class Book:
         self.total_page=total_page
         self._status=status
         self._current_page=0
-<<<<<<< HEAD
-        self._finish_date:Optional[date]=None
-=======
         self._finished_date:Optional[date]=None
->>>>>>> 2383e5a (day04: update the keywords)
 
         if status is Status.READING:
             self._current_page=self._validate_page(current_page)
         elif status is Status.FINISHED:
             self._current_page= total_page
-            self._finish_date=finish_date or date.today()
+            self._finish_date=finished_date or date.today()
 
         self._rating:Optional[int]=None
         if rating is not None:
