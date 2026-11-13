@@ -103,7 +103,7 @@ class Library:
         book=self.get_book(book_id)
         self._books.remove(book)
         self._save()
-        logger.info("Removed Book id=%d title=%r",book.id,book.title)
+        logger.info("Removed book id=%d title=%r",book.id,book.title)
         return book
 
     def start_reading(self,book_id:int)-> Book:
@@ -130,7 +130,7 @@ class Library:
         logger.info("Finished book's id=%d on %s",book.id,book.finished_date)
         return book
 
-    def rate_books(self,book_id:int,rating:int)-> Book:
+    def rate_book(self,book_id:int,rating:int)-> Book:
         """mark a book as finsihed (record today's date)."""
         book=self.get_book(book_id)
         book.set_rating(rating)

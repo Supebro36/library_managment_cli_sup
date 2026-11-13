@@ -123,9 +123,9 @@ class Book:
         return self._current_page
 
     @property
-    def finish_date(self)-> Optional[date]:
+    def finished_date(self)-> Optional[date]:
         """Date the book was finished , or None ."""
-        return self._finish_date
+        return self._finished_date
 
     @property
     def rating(self)->Optional[int]:
@@ -170,7 +170,7 @@ class Book:
             raise InvalidOperationError(f"'{self.title}' is already finished.")
         self._status=Status.FINISHED
         self._current_page=self.total_page
-        self._finish_date= finished_on or date.today()
+        self._finished_date= finished_on or date.today()
 
     def set_rating(self,rating:int)->None:
         """Rate a finished book from 1-5 stars."""

@@ -11,3 +11,15 @@
 2026-11-13 14:38:05,868 INFO     src.app.library: Updated notes id=2
 2026-11-13 14:38:28,736 INFO     src.app.exporter: Exported 1 book(s) to E:\library_managment_cli_sup\export\reading_report.csv
 2026-11-13 22:22:08,342 INFO     src.app.storage: Loaded 1 book(s) from E:\library_managment_cli_sup\data.json
+2026-11-13 22:25:51,972 INFO     src.app.storage: Loaded 1 book(s) from E:\library_managment_cli_sup\data.json
+2026-11-13 22:41:15,746 INFO     src.app.storage: Loaded 1 book(s) from E:\library_managment_cli_sup\data.json
+2026-11-13 22:41:19,541 WARNING  src.app.cli: Action 5 failed: 'brave new world' is already finished.
+2026-11-13 22:42:12,033 INFO     src.app.exporter: Exported 1 book(s) to E:\library_managment_cli_sup\export\reading_report.md
+2026-11-13 22:44:14,826 INFO     src.app.library: Added book id=3 title ='dune'
+2026-11-13 22:45:06,961 INFO     src.app.library: Added book id=4 title ='atomic habits'
+2026-11-13 22:45:37,095 INFO     src.app.library: Started reading id=3
+2026-11-13 22:45:53,177 INFO     src.app.library: Finished book's id=3 on 2026-11-13
+2026-11-13 22:46:19,167 WARNING  src.app.cli: Action 9 failed: No book with id 5 found.
+2026-11-13 22:46:28,919 WARNING  src.app.cli: Action 9 failed: 'atomic habits' must be finished before it can be rated.
+2026-11-13 22:47:24,797 INFO     src.app.library: Updated notes id=3
+2026-11-13 22:48:15,834 INFO     src.app.exporter: Exported 3 book(s) to E:\library_managment_cli_sup\export\reading_report.md
